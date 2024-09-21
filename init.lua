@@ -1,4 +1,5 @@
 vim.o.background = "dark"
+vim.opt.number = true
 
 -- Create an event handler for the FileType autocommand
 vim.api.nvim_create_autocmd('FileType', {
