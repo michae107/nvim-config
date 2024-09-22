@@ -1,5 +1,9 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 vim.o.background = "dark"
 vim.opt.number = true
+vim.opt.relativenumber = false
 
 -- Create an event handler for the FileType autocommand
 vim.api.nvim_create_autocmd('FileType', {
@@ -30,4 +34,4 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_set_keymap('n', ',', '<C-f>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '.', '<C-b>', { noremap = true, silent = true })
-
+vim.api.nvim_set_keymap('n', '<leader>;', ':', { noremap = true, silent = true })
