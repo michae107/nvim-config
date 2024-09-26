@@ -26,6 +26,9 @@ vim.api.nvim_set_keymap('n', '<leader>;', ':', { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 vim.api.nvim_set_keymap('n', '<leader>so', ':source $MYVIMRC<CR>', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n><CR>', { noremap = true, silent = true })
+
 --
 -- default shit below
 --
@@ -842,6 +845,14 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  },
+
+  {
+    "stevearc/oil.nvim",
+    config = function()
+      require("oil").setup()
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    end
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
