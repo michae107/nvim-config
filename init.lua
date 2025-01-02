@@ -16,6 +16,8 @@ vim.opt.relativenumber = true
 vim.api.nvim_set_keymap('n', ',', '<C-f>zz', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '.', '<C-b>zz', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>;', ':', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'z', '<C-w>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('i', '<TAB>', '<C-y>', { noremap = true, silent = true })
 
 -- vim.api.nvim_set_keymap('n', 'm', '<Esc>', { noremap = true, silent = true }) -- Normal mode
 -- vim.api.nvim_set_keymap('i', 'm', '<Esc>', { noremap = true, silent = true }) -- Insert mode
@@ -718,9 +720,9 @@ require('lazy').setup({
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping.select_next_item(),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
