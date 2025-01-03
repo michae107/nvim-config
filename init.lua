@@ -13,8 +13,8 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 
-vim.api.nvim_set_keymap('n', ',', '<C-f>zz', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '.', '<C-b>zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ',', '<C-d>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '.', '<C-u>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>;', ':', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'z', '<C-w>', { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('i', '<TAB>', '<C-y>', { noremap = true, silent = true })
@@ -210,59 +210,59 @@ require('lazy').setup({
   --  config = function() ... end
 
   -- not working
-  -- { -- Useful plugin to show you pending keybinds.
-  --   'folke/which-key.nvim',
-  --   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-  --   opts = {
-  --     icons = {
-  --       -- set icon mappings to true if you have a Nerd Font
-  --       mappings = vim.g.have_nerd_font,
-  --       -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-  --       -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
-  --       keys = vim.g.have_nerd_font and {} or {
-  --         Up = '<Up> ',
-  --         Down = '<Down> ',
-  --         Left = '<Left> ',
-  --         Right = '<Right> ',
-  --         C = '<C-…> ',
-  --         M = '<M-…> ',
-  --         D = '<D-…> ',
-  --         S = '<S-…> ',
-  --         CR = '<CR> ',
-  --         Esc = '<Esc> ',
-  --         ScrollWheelDown = '<ScrollWheelDown> ',
-  --         ScrollWheelUp = '<ScrollWheelUp> ',
-  --         NL = '<NL> ',
-  --         BS = '<BS> ',
-  --         Space = '<Space> ',
-  --         Tab = '<Tab> ',
-  --         F1 = '<F1>',
-  --         F2 = '<F2>',
-  --         F3 = '<F3>',
-  --         F4 = '<F4>',
-  --         F5 = '<F5>',
-  --         F6 = '<F6>',
-  --         F7 = '<F7>',
-  --         F8 = '<F8>',
-  --         F9 = '<F9>',
-  --         F10 = '<F10>',
-  --         F11 = '<F11>',
-  --         F12 = '<F12>',
-  --       },
-  --     },
+   { -- Useful plugin to show you pending keybinds.
+     'folke/which-key.nvim',
+     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+     opts = {
+       icons = {
+         -- set icon mappings to true if you have a Nerd Font
+         mappings = vim.g.have_nerd_font,
+         -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
+         -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
+         keys = vim.g.have_nerd_font and {} or {
+           Up = '<Up> ',
+           Down = '<Down> ',
+           Left = '<Left> ',
+           Right = '<Right> ',
+           C = '<C-…> ',
+           M = '<M-…> ',
+           D = '<D-…> ',
+           S = '<S-…> ',
+           CR = '<CR> ',
+           Esc = '<Esc> ',
+           ScrollWheelDown = '<ScrollWheelDown> ',
+           ScrollWheelUp = '<ScrollWheelUp> ',
+           NL = '<NL> ',
+           BS = '<BS> ',
+           Space = '<Space> ',
+           Tab = '<Tab> ',
+           F1 = '<F1>',
+           F2 = '<F2>',
+           F3 = '<F3>',
+           F4 = '<F4>',
+           F5 = '<F5>',
+           F6 = '<F6>',
+           F7 = '<F7>',
+           F8 = '<F8>',
+           F9 = '<F9>',
+           F10 = '<F10>',
+           F11 = '<F11>',
+           F12 = '<F12>',
+         },
+       },
 
-  --     -- Document existing key chains
-  --     spec = {
-  --       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-  --       { '<leader>d', group = '[D]ocument' },
-  --       { '<leader>r', group = '[R]ename' },
-  --       { '<leader>s', group = '[S]earch' },
-  --       { '<leader>w', group = '[W]orkspace' },
-  --       { '<leader>t', group = '[T]oggle' },
-  --       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-  --     },
-  --   },
-  -- },
+       -- Document existing key chains
+       spec = {
+         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+         { '<leader>d', group = '[D]ocument' },
+         { '<leader>r', group = '[R]ename' },
+         { '<leader>s', group = '[S]earch' },
+         { '<leader>w', group = '[W]orkspace' },
+         { '<leader>t', group = '[T]oggle' },
+         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+       },
+     },
+   },
 
   -- NOTE: Plugins can specify dependencies.
   --
@@ -588,6 +588,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'codelldb', -- for dap
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -857,6 +858,101 @@ require('lazy').setup({
     end
   },
 
+{
+  -- NOTE: Yes, you can install new plugins here!
+  'mfussenegger/nvim-dap',
+  -- NOTE: And you can specify dependencies as well
+  dependencies = {
+    -- Creates a beautiful debugger UI
+    'rcarriga/nvim-dap-ui',
+
+    -- Required dependency for nvim-dap-ui
+    'nvim-neotest/nvim-nio',
+
+    -- Installs the debug adapters for you
+    'williamboman/mason.nvim',
+    'jay-babu/mason-nvim-dap.nvim',
+
+    -- Add your own debuggers here
+    {
+       "julianolf/nvim-dap-lldb",
+       dependencies = { "mfussenegger/nvim-dap" },
+       opts = { },
+    },
+  },
+  keys = function(_, keys)
+    local dap = require 'dap'
+    local dapui = require 'dapui'
+    return {
+      -- Basic debugging keymaps, feel free to change to your liking!
+      { '<F12>', dap.stop, desc = 'Debug: Stop' },
+      { '<F11>', dap.step_into, desc = 'Debug: Step Into' },
+      { '<F10>', dap.step_over, desc = 'Debug: Step Over' },
+      { '<F8>', dap.step_out, desc = 'Debug: Step Out' },
+      { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
+      { '<F6>', dapui.toggle, desc = 'Debug: See last session result.' },
+      { '<F7>', dap.run_to_cursor, desc = 'Debug: Run to Cursor' },
+      { '<leader>b', dap.toggle_breakpoint, desc = 'Debug: Toggle Breakpoint' },
+      {
+        '<leader>B',
+        function()
+          dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+        end,
+        desc = 'Debug: Set Breakpoint condition',
+      },
+      unpack(keys),
+    }
+  end,
+  config = function()
+    local dap = require 'dap'
+    local dapui = require 'dapui'
+
+    require('mason-nvim-dap').setup {
+      -- Makes a best effort to setup the various debuggers with
+      -- reasonable debug configurations
+      automatic_installation = true,
+
+      -- You can provide additional configuration to the handlers,
+      -- see mason-nvim-dap README for more information
+      handlers = {},
+
+      -- You'll need to check that you have the required things installed
+      -- online, please don't ask me how to install them :)
+      ensure_installed = {
+        -- Update this to ensure that you have the debuggers for the langs you want
+        'delve',
+      },
+    }
+
+    -- Dap UI setup
+    -- For more information, see |:help nvim-dap-ui|
+    dapui.setup {
+      -- Set icons to characters that are more likely to work in every terminal.
+      --    Feel free to remove or use ones that you like more! :)
+      --    Don't feel like these are good choices.
+      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+      controls = {
+        icons = {
+          pause = '⏸',
+          play = '▶',
+          step_into = '⏎',
+          step_over = '⏭',
+          step_out = '⏮',
+          step_back = 'b',
+          run_last = '▶▶',
+          terminate = '⏹',
+          disconnect = '⏏',
+        },
+      },
+    }
+
+    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+  end
+},
+
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
@@ -866,7 +962,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  --require 'plugins/debug.lua',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
